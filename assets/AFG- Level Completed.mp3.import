@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dvnpbxasmk21w"
+path="res://.godot/imported/AFG- Level Completed.mp3-aa63811cb1334796c39cacf09ce36597.mp3str"
+
+[deps]
+
+source_file="res://assets/AFG- Level Completed.mp3"
+dest_files=["res://.godot/imported/AFG- Level Completed.mp3-aa63811cb1334796c39cacf09ce36597.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

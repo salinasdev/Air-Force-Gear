@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://f2ayh1vtue13"
+path="res://.godot/imported/Destroyed Metropolis.mp3-76571c9a0ba2cad3fa09ee96011f9bf9.mp3str"
+
+[deps]
+
+source_file="res://assets/Destroyed Metropolis.mp3"
+dest_files=["res://.godot/imported/Destroyed Metropolis.mp3-76571c9a0ba2cad3fa09ee96011f9bf9.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
