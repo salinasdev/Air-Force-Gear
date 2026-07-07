@@ -1411,11 +1411,16 @@ func resume_game() -> void:
 
 func _add_background(key:String) -> void:
 	if not tex.has(key): return
-	bg1 = _sprite(key, Vector2(W/2, H/2), game_root); bg2 = _sprite(key, Vector2(W/2, H/2-480), game_root)
+	bg_offset = 0.0
+	# bg1 cubre la pantalla (parte inferior de la textura = terreno inicial)
+	# bg2 justo encima, fuera de pantalla (parte superior = terreno siguiente)
+	bg1 = _sprite(key, Vector2(0, 0), game_root)
+	bg2 = _sprite(key, Vector2(0, -480), game_root)
+	bg1.centered = false; bg2.centered = false
 	bg1.z_index = 0; bg2.z_index = 0
-	# Crop-like scaling: original backgrounds are 320x1440; use as long scrolling texture.
 	bg1.region_enabled = true; bg2.region_enabled = true
-	bg1.region_rect = Rect2(0,0,320,480); bg2.region_rect = Rect2(0,480,320,480)
+	bg1.region_rect = Rect2(0, 480, 320, 480)
+	bg2.region_rect = Rect2(0, 0, 320, 480)
 
 func _switch_background(key: String) -> void:
 	if key == tournament_bg_key:
@@ -1468,11 +1473,17 @@ func _scroll_background(delta: float) -> void:
 			call_deferred("level_complete")
 		return
 
-	bg_offset = fmod(bg_offset, 960.0)
+	# Mover ambos sprites hacia abajo para dar sensación de avance.
+	# Cuando uno sale por el borde inferior salta 960 px arriba (leapfrog).
+	var speed := delta * (45.0 + float(level) * 12.0)
+	bg1.position.y += speed
+	if bg1.position.y >= float(H):
+		bg1.position.y -= 960.0
 	if bg2:
 		bg2.visible = true
-		bg1.region_rect.position.y = int(bg_offset) % 960
-		bg2.region_rect.position.y = (int(bg_offset) + 480) % 960
+		bg2.position.y += speed
+		if bg2.position.y >= float(H):
+			bg2.position.y -= 960.0
 
 func _move_clouds(delta: float) -> void:
 	for c in clouds:
