@@ -44,6 +44,10 @@ var tournament_pos := 0
 var tournament_giant_mode := false
 var tournament_bg_key := ""
 var tournament_scroll_finished := false
+# Multi-segment tournament BG: each texture is ≤2400 px, safe for mobile WebGL (max 4096 px).
+var tournament_segments: Array[String] = ["bg_sea_day", "bg_sea_taiga", "bg_taiga_day", "bg_taiga_tundra", "bg_tundra_day"]
+var tournament_seg_idx := 0
+var tournament_seg_scroll := 0.0
 var boss_active := false
 var boss_dead := false
 var boss_dying := false
@@ -377,9 +381,12 @@ func start_tournament() -> void:
 	killed = 0
 	enemies_spawned = 0
 	enemies_to_clear = int(current_level_cfg["enemies"])
-	tournament_bg_key = "bg_tournament_route"
+	tournament_seg_idx = 0
+	tournament_seg_scroll = 0.0
 	tournament_scroll_finished = false
+	tournament_bg_key = tournament_segments[0]
 	_add_background(tournament_bg_key)
+	_fix_tournament_seg_region()
 	_spawn_clouds()
 	player = _sprite("player", Vector2(W/2,H-65), game_root)
 	player.z_index = 5
@@ -1438,10 +1445,16 @@ func _switch_background(key: String) -> void:
 		bg2 = null
 	_add_background(key)
 
+func _fix_tournament_seg_region() -> void:
+	# Set bg1's region_rect so the bottom 480 px of the segment texture is shown first.
+	if not bg1 or not bg1.texture:
+		return
+	var h := int(bg1.texture.get_height())
+	bg1.region_rect = Rect2(0, h - 480, 320, 480)
+	if bg2:
+		bg2.visible = false
+
 func _update_tournament_background() -> void:
-	# Tournament uses one stitched route texture to avoid visible jumps between
-	# Sea -> Sea/Taiga -> Taiga -> Taiga/Tundra -> Tundra.
-	# No per-section texture switching is needed.
 	pass
 
 func _scroll_background(delta: float) -> void:
@@ -1449,28 +1462,36 @@ func _scroll_background(delta: float) -> void:
 	if not bg1:
 		return
 
-	# Tournament is one stitched route texture. It is stacked top-to-bottom as
-	# Tundra -> Taiga/Tundra -> Taiga -> Sea/Taiga -> Sea, then sampled
-	# from bottom to top so the playable route is Sea -> Taiga -> Tundra.
+	# Tournament scrolls through 5 segments in sequence so that no single
+	# texture exceeds 2400 px — well within the mobile WebGL 4096 px limit.
+	# Route: Sea (1440) → Sea/Taiga (2400) → Taiga (1440) → Taiga/Tundra (2400) → Tundra (1440).
 	if tournament_giant_mode:
-		var texture_height: int = 480
-		if bg1.texture:
-			texture_height = int(bg1.texture.get_height())
-		var max_y: int = texture_height - 480
-		if max_y < 0:
-			max_y = 0
-		# Tournament must not loop. It is a single giant route:
-		# Sea -> Sea/Taiga -> Taiga -> Taiga/Tundra -> Tundra.
-		# When the scroll reaches the end of Tundra, finish the stage instead
-		# of wrapping back to Sea.
-		var progress: int = int(min(bg_offset, float(max_y)))
-		var source_y: int = max_y - progress
-		bg1.region_rect.position.y = source_y
+		if not bg1 or not bg1.texture:
+			return
+		var texture_height: int = int(bg1.texture.get_height())
+		var max_scroll: int = max(0, texture_height - 480)
+		tournament_seg_scroll += delta * (45 + level * 12)
+		var progress: int = int(min(tournament_seg_scroll, float(max_scroll)))
+		bg1.region_rect.position.y = max_scroll - progress
 		if bg2:
 			bg2.visible = false
-		if progress >= max_y and not tournament_scroll_finished and screen == Screen.GAME:
-			tournament_scroll_finished = true
-			call_deferred("level_complete")
+		if int(tournament_seg_scroll) >= max_scroll:
+			if tournament_seg_idx < tournament_segments.size() - 1:
+				tournament_seg_idx += 1
+				tournament_seg_scroll = 0.0
+				var next_key: String = tournament_segments[tournament_seg_idx]
+				tournament_bg_key = next_key
+				if bg1:
+					bg1.queue_free()
+					bg1 = null
+				if bg2:
+					bg2.queue_free()
+					bg2 = null
+				_add_background(next_key)
+				_fix_tournament_seg_region()
+			elif not tournament_scroll_finished and screen == Screen.GAME:
+				tournament_scroll_finished = true
+				call_deferred("level_complete")
 		return
 
 	# Mover ambos sprites hacia abajo para dar sensación de avance.

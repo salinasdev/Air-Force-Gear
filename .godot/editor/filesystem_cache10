@@ -1,10 +1,10 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1783417587
-Android Squadron 2 - Godot Remake.apple-touch-icon.png::CompressedTexture2D::7774418037282730701::1783335602::1783335620::1::::<><><>0<>0<>6a1774990b5b80af886f0fe58ea02575<>res://.godot/imported/Android Squadron 2 - Godot Remake.apple-touch-icon.png-0798cf72b27f757097a94fac2d723e6f.ctex::
-Android Squadron 2 - Godot Remake.icon.png::CompressedTexture2D::8006140844699544892::1783335602::1783335620::1::::<><><>0<>0<>abbbdaf57603fcf2e7c1f061dda428c4<>res://.godot/imported/Android Squadron 2 - Godot Remake.icon.png-2e222ed70f03c165da5cde24a065da1e.ctex::
-Android Squadron 2 - Godot Remake.png::CompressedTexture2D::2082941984942550553::1783335602::1783335620::1::::<><><>0<>0<>4e3d0632a73b033f665cd579317a048a<>res://.godot/imported/Android Squadron 2 - Godot Remake.png-4396642eaf9f9b29b6fd3660600e54a4.ctex::
-export_presets.cfg::TextFile::-1::1783335603::0::1::::<><><>0<>0<><>::
-README.md::TextFile::-1::1783335425::0::1::::<><><>0<>0<><>::
+::res://::1783497509
+Android Squadron 2 - Godot Remake.apple-touch-icon.png::CompressedTexture2D::7774418037282730701::1783423888::1783335620::1::::<><><>0<>0<>6a1774990b5b80af886f0fe58ea02575<>res://.godot/imported/Android Squadron 2 - Godot Remake.apple-touch-icon.png-0798cf72b27f757097a94fac2d723e6f.ctex::
+Android Squadron 2 - Godot Remake.icon.png::CompressedTexture2D::8006140844699544892::1783423888::1783335620::1::::<><><>0<>0<>abbbdaf57603fcf2e7c1f061dda428c4<>res://.godot/imported/Android Squadron 2 - Godot Remake.icon.png-2e222ed70f03c165da5cde24a065da1e.ctex::
+Android Squadron 2 - Godot Remake.png::CompressedTexture2D::2082941984942550553::1783423888::1783335620::1::::<><><>0<>0<>4e3d0632a73b033f665cd579317a048a<>res://.godot/imported/Android Squadron 2 - Godot Remake.png-4396642eaf9f9b29b6fd3660600e54a4.ctex::
+export_presets.cfg::TextFile::-1::1783423888::0::1::::<><><>0<>0<><>::
+README.md::TextFile::-1::1783423504::0::1::::<><><>0<>0<><>::
 README_v17.md::TextFile::-1::1783335425::0::1::::<><><>0<>0<><>::
 ::res://assets/::1783335432
 AFG- Game Over.mp3::AudioStreamMP3::2273226090138770133::1783335425::1783335431::1::::<><><>0<>0<>74c55488acaecafa525ab5186e90b8cc<>res://.godot/imported/AFG- Game Over.mp3-48ebb78094bbc30470de54f7bfdb115b.mp3str::
@@ -134,8 +134,8 @@ PORT_1_1.md::TextFile::-1::1783335425::0::1::::<><><>0<>0<><>::
 Main.tscn::PackedScene::-1::1783335425::0::1::::<><><>0<>0<><>::res://scripts/Main.gd
 ::res://scenes/entities/::1783335425
 ::res://scenes/ui/::1783335425
-::res://scripts/::1783335431
-Main.gd::GDScript::6833561176122318398::1783417562::0::1::::<>Node2D<><>0<>0<><>::
+::res://scripts/::1783423504
+Main.gd::GDScript::6833561176122318398::1783491144::0::1::::<>Node2D<><>0<>0<><>::
 ::res://scripts/entities/::1783335425
 ::res://scripts/managers/::1783335431
 LevelConfig.gd::GDScript::4448373532398172065::1783335425::0::1::::LevelConfig<>RefCounted<><>0<>0<><>::
